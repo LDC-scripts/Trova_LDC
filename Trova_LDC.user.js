@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Trova LDC v15.05
+// @name         Trova LDC v15.06
 // @namespace    http://tampermonkey.net/
-// @version      15.05
+// @version      15.06
 // @description  Mostra la chiave fisica in qualsiasi vista ServiceNow con colonna Rack.
 //               Ricerca per Rack e Etichetta asset. Pulsante QR (280x280) per ogni riga.
 // @author       LDC
@@ -21,7 +21,7 @@
     'use strict';
 
     const REFRESH_MIN = 5;
-    const COL = { etichettaAsset:0, rack:1, categoriaModello:2, nomeCompleto:3, assetModel:4, piattaformaSupportata:5, chiave:6 };
+    const COL = { etichettaAsset:0, rack:1, assetSN:2, categoriaModello:3, nomeCompleto:4, assetModel:5, piattaformaSupportata:6, chiave:7 };
 
     // ── Link CSV preconfigurato (lasciare vuoto nella versione GitHub) ──
     const CSV_URL_DEFAULT = "";
@@ -133,6 +133,7 @@
                     const row = {
                         etichetta:   (c[COL.etichettaAsset]        || "").trim(),
                         rack:        (c[COL.rack]                  || "").trim(),
+                        assetSN:     (c[COL.assetSN]               || "").trim(),
                         categoria:   (c[COL.categoriaModello]      || "").trim(),
                         sala:        (c[COL.nomeCompleto]          || "").trim(),
                         modello:     (c[COL.assetModel]            || "").trim(),
@@ -149,10 +150,10 @@
                     });
                 });
                 db = nuova; dbPronto = true;
-                console.log("Trova LDC v15.05: DB pronto — " + db.rows.length + " righe.");
+                console.log("Trova LDC v15.06: DB pronto — " + db.rows.length + " righe.");
                 if (callback) callback();
             },
-            onerror: () => console.error("Trova LDC v15.05: Errore caricamento CSV.")
+            onerror: () => console.error("Trova LDC v15.06: Errore caricamento CSV.")
         });
     }
 
@@ -284,6 +285,7 @@
             chiave:      rigaDb.chiave,
             rack:        rigaDb.rack,
             etichetta:   rigaDb.etichetta,
+            assetSN:     rigaDb.assetSN,
             sala:        rigaDb.sala,
             piattaforma: rigaDb.piattaforma,
             categoria:   rigaDb.categoria,
