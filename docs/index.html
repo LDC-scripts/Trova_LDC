@@ -23,7 +23,6 @@
 }
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;overflow:hidden}
 
-/* ── SCHERMATE ── */
 .screen{
   position:fixed;inset:0;display:flex;flex-direction:column;
   background:var(--bg);max-width:520px;margin:0 auto;
@@ -34,12 +33,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .screen.active{transform:translateX(0);z-index:10}
 .screen.behind{transform:translateX(0);z-index:1}
 
-/* ── HEADER ── */
+/* HEADER */
 .app-hdr{
   background:var(--red);padding:10px 14px;
   display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.18);
-  gap:8px;
+  flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,0.18);gap:8px;
 }
 .logo-main{font-family:var(--font-h);font-size:24px;color:white;letter-spacing:3px;line-height:1}
 .logo-sub{font-family:var(--font-m);font-size:9px;color:rgba(255,255,255,0.55);letter-spacing:1px;margin-top:1px}
@@ -50,19 +48,25 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
   cursor:pointer;white-space:nowrap;
 }
 .back-btn:active{background:rgba(0,0,0,0.4)}
-.hdr-title{
-  font-family:var(--font-h);font-size:18px;letter-spacing:2px;
-  color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;
-}
+.hdr-title{font-family:var(--font-h);font-size:18px;letter-spacing:2px;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
 #db-pill{display:flex;align-items:center;gap:5px;background:rgba(0,0,0,0.2);border-radius:20px;padding:4px 10px;cursor:pointer;flex-shrink:0}
 #db-pill:active{background:rgba(0,0,0,0.35)}
 #db-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3);transition:background 0.3s;flex-shrink:0}
 #db-dot.ok{background:#4cff7a;box-shadow:0 0 6px #4cff7a}
-#db-dot.err{background:#ffcc00;box-shadow:0 0 6px #ffcc00}
+#db-dot.err{background:#ff4444;box-shadow:0 0 6px #ff4444}
 #db-dot.offline{background:#ff9900;box-shadow:0 0 6px #ff9900}
 #db-txt{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,0.8);white-space:nowrap}
 
-/* ── HOME ── */
+/* OFFLINE BANNER */
+#offline-banner{
+  display:none;background:#fff3cd;border-bottom:1px solid #ffc107;
+  padding:6px 14px;font-family:var(--font-m);font-size:10px;
+  color:#856404;letter-spacing:0.5px;flex-shrink:0;
+  align-items:center;justify-content:space-between;gap:8px;
+}
+#offline-banner.visible{display:flex}
+
+/* HOME */
 #screen-home main{overflow-y:auto;padding:12px 12px 6px;display:flex;flex-direction:column;gap:10px;flex:1;-webkit-overflow-scrolling:touch}
 #screen-home main::-webkit-scrollbar{display:none}
 .card{background:var(--surf);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden}
@@ -74,9 +78,34 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .seg-hint{display:block;font-size:8px;letter-spacing:0.5px;color:rgba(255,255,255,0.6);margin-top:1px}
 .seg-btn:not(.active) .seg-hint{color:var(--light)}
 .input-row{display:flex;gap:7px}
-#search-input{flex:1;height:50px;min-width:0;background:var(--panel);border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-family:var(--font-b);font-size:18px;font-weight:700;padding:0 13px;outline:none;transition:border-color 0.2s,background 0.2s;letter-spacing:1px}
+
+/* Input con suggerimenti */
+.input-wrap{flex:1;position:relative;min-width:0}
+#search-input{
+  width:100%;height:50px;background:var(--panel);border:1.5px solid var(--border);
+  border-radius:var(--r-sm);color:var(--text);font-family:var(--font-b);
+  font-size:18px;font-weight:700;padding:0 13px;outline:none;
+  transition:border-color 0.2s,background 0.2s;letter-spacing:1px;
+}
 #search-input:focus{border-color:var(--red);background:white}
 #search-input::placeholder{color:var(--light);font-weight:400;font-size:15px;letter-spacing:0}
+
+/* Dropdown suggerimenti */
+#suggest-list{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;
+  background:var(--surf);border:1.5px solid var(--border);border-radius:var(--r-sm);
+  z-index:50;max-height:200px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,0.12);
+}
+#suggest-list.visible{display:block}
+#suggest-list::-webkit-scrollbar{display:none}
+.suggest-item{
+  padding:10px 14px;font-family:var(--font-b);font-size:15px;font-weight:600;
+  color:var(--text);cursor:pointer;border-bottom:1px solid var(--border);
+}
+.suggest-item:last-child{border-bottom:none}
+.suggest-item:active{background:var(--red-bg);color:var(--red)}
+.suggest-match{color:var(--red);font-weight:800}
+
 .icon-btn{width:50px;height:50px;flex-shrink:0;background:var(--panel);border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .icon-btn:active{background:var(--border);transform:scale(0.93)}
 .qr-btn{width:50px;height:50px;flex-shrink:0;background:var(--panel);border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:var(--font-h);font-size:18px;letter-spacing:1px;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -95,17 +124,19 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 .nav-ico{font-size:19px;line-height:1}
 .nav-label{font-family:var(--font-b);font-size:9px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
 
-/* ── HERO CHIAVE ── */
-.res-hero{background:var(--red);padding:14px 16px 16px;flex-shrink:0}
+/* HERO */
+.res-hero{background:var(--red);padding:12px 16px 14px;flex-shrink:0}
 .res-hero-label{font-family:var(--font-m);font-size:9px;color:rgba(255,255,255,0.65);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px}
-.res-hero-key{font-family:var(--font-h);font-size:52px;color:white;letter-spacing:6px;line-height:1}
-.res-hero-query{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,0.5);margin-top:5px}
+.res-hero-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.res-hero-key{font-family:var(--font-h);font-size:52px;color:white;letter-spacing:6px;line-height:1;flex-shrink:0}
+.res-hero-sala{font-family:var(--font-m);font-size:13px;color:rgba(255,255,255,0.75);text-align:right;line-height:1.3;word-break:break-word}
+.res-hero-query{font-family:var(--font-m);font-size:10px;color:rgba(255,255,255,0.5);margin-top:4px}
 
-/* ── SCROLL CONTENT ── */
+/* SCROLL */
 .res-scroll{flex:1;overflow-y:auto;padding:12px 12px 20px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
 .res-scroll::-webkit-scrollbar{display:none}
 
-/* ── DATA GRID (dettaglio) ── */
+/* DATA GRID */
 .data-grid{display:grid;grid-template-columns:1fr 1fr}
 .dcell{padding:10px 13px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
 .dcell:nth-child(2n){border-right:none}
@@ -118,7 +149,7 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 .dval.grn{color:var(--green)}
 .dval.amb{color:var(--amber)}
 
-/* ── LIST ITEMS ── */
+/* LIST ITEMS */
 .list-section-label{font-family:var(--font-m);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;padding:0 2px}
 .list-item{background:var(--surf);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer}
 .list-item:active{border-color:var(--red);background:var(--red-bg)}
@@ -135,7 +166,7 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 .nf-msg{font-size:20px;font-weight:700}
 .nf-sub{font-family:var(--font-m);font-size:12px;color:var(--muted)}
 
-/* ── AUX ── */
+/* AUX */
 .aux-scroll{flex:1;overflow-y:auto;padding:12px 12px 20px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch}
 .aux-scroll::-webkit-scrollbar{display:none}
 .hist-item{background:var(--surf);border:1.5px solid var(--border);border-radius:var(--r);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer}
@@ -145,16 +176,7 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 .hi-key{font-family:var(--font-h);font-size:26px;color:var(--red);letter-spacing:2px;flex-shrink:0}
 .hi-nil{font-size:18px;color:var(--light);flex-shrink:0}
 
-/* ── OFFLINE BANNER ── */
-#offline-banner{
-  display:none;background:#fff3cd;border-bottom:1px solid #ffc107;
-  padding:6px 14px;font-family:var(--font-m);font-size:10px;
-  color:#856404;letter-spacing:0.5px;flex-shrink:0;
-  align-items:center;justify-content:space-between;gap:8px;
-}
-#offline-banner.visible{display:flex}
-
-/* ── SCAN OVERLAY ── */
+/* SCAN OVERLAY */
 .scan-ov{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.95);flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px}
 .scan-ov.visible{display:flex}
 .scan-title{font-family:var(--font-h);font-size:22px;letter-spacing:3px;color:white}
@@ -166,14 +188,14 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 </head>
 <body>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div class="screen active" id="screen-home">
   <div class="app-hdr">
     <div><div class="logo-main">LDC KEYS</div><div class="logo-sub">DATACENTER KEY MANAGER</div></div>
     <div id="db-pill" onclick="ricaricaDB()"><div id="db-dot"></div><span id="db-txt">...</span></div>
   </div>
   <div id="offline-banner">
-    <span id="offline-txt">DATI OFFLINE</span>
+    <span>DATI OFFLINE</span>
     <span id="offline-ts"></span>
   </div>
   <main>
@@ -182,11 +204,14 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
       <div style="padding:11px;display:flex;flex-direction:column;gap:9px;">
         <div class="seg">
           <button class="seg-btn active" id="seg-num" onclick="setModalita('num')">Rack / Etichetta<span class="seg-hint">tastierino</span></button>
-          <button class="seg-btn" id="seg-txt" onclick="setModalita('txt')">Piattaforma<span class="seg-hint">tastiera</span></button>
+          <button class="seg-btn" id="seg-txt" onclick="setModalita('txt')">Cliente<span class="seg-hint">tastiera</span></button>
         </div>
         <div class="input-row">
-          <input id="search-input" inputmode="numeric" placeholder="Es. 12345678"
-                 autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+          <div class="input-wrap">
+            <input id="search-input" inputmode="numeric" placeholder="Es. 12345678"
+                   autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false">
+            <div id="suggest-list"></div>
+          </div>
           <button class="icon-btn" id="btn-scan">📷</button>
           <button class="qr-btn" id="btn-qr">QR</button>
         </div>
@@ -202,73 +227,72 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
   </nav>
 </div>
 
-<!-- ══ LISTA RACK (livello 1 — ricerca piattaforma) ══ -->
+<!-- LISTA RACK (livello 1) -->
 <div class="screen" id="screen-lista-rack">
   <div class="app-hdr">
-    <div class="hdr-btns">
-      <button class="back-btn" onclick="tornaHome()">⌂ Home</button>
-    </div>
+    <div class="hdr-btns"><button class="back-btn" onclick="tornaHome()">⌂ Home</button></div>
     <div class="hdr-title" id="lista-rack-title">RACK</div>
   </div>
   <div class="res-scroll" id="lista-rack-scroll"></div>
 </div>
 
-<!-- ══ LISTA ETICHETTE (livello 2 — etichette in un rack) ══ -->
+<!-- LISTA ETICHETTE (livello 2) -->
 <div class="screen" id="screen-lista-et">
   <div class="app-hdr">
     <div class="hdr-btns">
       <button class="back-btn" onclick="tornaHome()">⌂ Home</button>
-      <button class="back-btn" id="back-to-rack-btn" onclick="tornaListaRack()">← Rack</button>
+      <button class="back-btn" onclick="tornaListaRack()">← Rack</button>
     </div>
     <div class="hdr-title" id="lista-et-title">ETICHETTE</div>
   </div>
   <div class="res-hero" id="lista-et-hero">
     <div class="res-hero-label">🔑 chiave fisica</div>
-    <div class="res-hero-key" id="lista-et-chiave">—</div>
+    <div class="res-hero-row">
+      <div class="res-hero-key" id="lista-et-chiave">—</div>
+      <div class="res-hero-sala" id="lista-et-sala"></div>
+    </div>
     <div class="res-hero-query" id="lista-et-rack"></div>
   </div>
   <div class="res-scroll" id="lista-et-scroll"></div>
 </div>
 
-<!-- ══ DETTAGLIO ETICHETTA (livello 3) ══ -->
+<!-- DETTAGLIO (livello 3 o risultato diretto) -->
 <div class="screen" id="screen-dettaglio">
   <div class="app-hdr">
     <div class="hdr-btns">
       <button class="back-btn" onclick="tornaHome()">⌂ Home</button>
-      <button class="back-btn" id="back-to-et-btn" onclick="tornaLivelloSuperiore()">← Indietro</button>
+      <button class="back-btn" id="back-superiore-btn" onclick="tornaLivelloSuperiore()">← Indietro</button>
     </div>
     <div class="hdr-title" id="dettaglio-title">DETTAGLIO</div>
   </div>
-  <div class="res-hero" id="dettaglio-hero">
+  <div class="res-hero">
     <div class="res-hero-label">🔑 chiave fisica</div>
-    <div class="res-hero-key" id="dettaglio-chiave">—</div>
+    <div class="res-hero-row">
+      <div class="res-hero-key" id="dettaglio-chiave">—</div>
+      <div class="res-hero-sala" id="dettaglio-sala"></div>
+    </div>
     <div class="res-hero-query" id="dettaglio-query"></div>
   </div>
   <div class="res-scroll" id="dettaglio-scroll"></div>
 </div>
 
-<!-- ══ RISULTATO SINGOLO (ricerca rack/etichetta diretta) ══ -->
-<div class="screen" id="screen-result">
+<!-- NESSUN RISULTATO -->
+<div class="screen" id="screen-noresult">
   <div class="app-hdr">
-    <div class="hdr-btns">
-      <button class="back-btn" onclick="tornaHome()">⌂ Home</button>
-    </div>
-    <div class="hdr-title" id="res-hdr-title">RISULTATO</div>
+    <div class="hdr-btns"><button class="back-btn" onclick="tornaHome()">⌂ Home</button></div>
+    <div class="hdr-title">NESSUN RISULTATO</div>
   </div>
-  <div class="res-hero" id="res-hero">
-    <div class="res-hero-label">🔑 chiave fisica</div>
-    <div class="res-hero-key" id="res-chiave">—</div>
-    <div class="res-hero-query" id="res-query"></div>
+  <div class="nf-wrap">
+    <div class="nf-icon">🔍</div>
+    <div class="nf-msg">Nessun risultato</div>
+    <div class="nf-sub" id="noresult-sub"></div>
   </div>
-  <div class="res-scroll" id="res-scroll"></div>
 </div>
 
-<!-- ══ AUX (history/info) ══ -->
+<!-- AUX -->
 <div class="screen" id="screen-aux">
   <div class="app-hdr">
-    <div class="hdr-btns">
-      <button class="back-btn" onclick="tornaHome()">⌂ Home</button>
-    </div>
+    <div class="hdr-btns"><button class="back-btn" onclick="tornaHome()">⌂ Home</button></div>
     <div class="hdr-title" id="aux-title">RECENTI</div>
   </div>
   <div class="aux-scroll" id="aux-content"></div>
@@ -282,7 +306,7 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
   <button class="btn-cls" onclick="chiudiScan('barcode')">✕  CHIUDI</button>
 </div>
 
-<!-- SCANNER QR SERVICENOW -->
+<!-- SCANNER QR -->
 <div class="scan-ov" id="scan-qrsn">
   <div class="scan-title">LEGGI QR SERVICENOW</div>
   <div class="scan-sub">PUNTA AL QR GENERATO DAL BROWSER</div>
@@ -294,27 +318,22 @@ nav{background:var(--surf);border-top:1.5px solid var(--border);display:flex;fle
 // ============================================================
 // CONFIG
 // ============================================================
-const CSV_DIRECT = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQtBU-lbL5JMTtqWJWDguk-wBB4CFAGCtSd5PLpPM9-028nSu1Dm-2zs_u3ONF-XH88YIEAia6Qe2Xz/pub?gid=898092456&single=true&output=csv";
-const CSV_PROXY  = "https://corsproxy.io/?" + encodeURIComponent(CSV_DIRECT);
-const MAX_HIST   = 20;
-const DB_CACHE_KEY = 'ldc_db_cache';
-const DB_TS_KEY    = 'ldc_db_ts';
+const CSV_DIRECT  = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQtBU-lbL5JMTtqWJWDguk-wBB4CFAGCtSd5PLpPM9-028nSu1Dm-2zs_u3ONF-XH88YIEAia6Qe2Xz/pub?gid=898092456&single=true&output=csv";
+const CSV_PROXY   = "https://corsproxy.io/?" + encodeURIComponent(CSV_DIRECT);
+const MAX_HIST    = 20;
+const DB_CACHE_KEY = 'ldc_db_cache_v2';
+const DB_TS_KEY    = 'ldc_db_ts_v2';
 
-// Indici colonne CSV (con Asset SN in posizione 2)
+// Indici colonne CSV con Asset SN in posizione 2
 const COL = { etichetta:0, rack:1, assetSN:2, categoria:3, sala:4, modello:5, piattaforma:6, chiave:7 };
 
-let db = { rows:[], idx:{}, idxPiattaforma:{} };
+let db = { rows:[], idx:{}, idxPiattaforma:{}, clienti:[] };
 let dbPronto = false;
 let scanners = {};
 let modalita = 'num';
-
-// Stato navigazione per il tasto "← Indietro" dal dettaglio
-// 'result' = vengo da ricerca diretta
-// 'lista-et' = vengo da lista etichette (flusso piattaforma)
 let dettaglioProvenienza = 'result';
-// Dati correnti per la navigazione back
-let currentRackData = null; // rack corrente nella lista etichette
-let currentPiattaforma = null; // piattaforma corrente nella lista rack
+let currentRackData = null;
+let currentPiattaforma = null;
 
 // ============================================================
 // NAVIGAZIONE
@@ -326,6 +345,7 @@ function mostraSchermata(id) {
 }
 
 function tornaHome() {
+  chiudiSuggerimenti();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active','behind'));
   document.getElementById('screen-home').classList.add('active');
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -335,90 +355,81 @@ function tornaHome() {
 }
 
 function tornaListaRack() {
-  // Torna alla lista rack della piattaforma corrente
-  if (currentPiattaforma) {
-    mostraListaRack(currentPiattaforma);
-  } else {
-    tornaHome();
-  }
+  if (currentPiattaforma) mostraListaRack(currentPiattaforma);
+  else tornaHome();
 }
 
 function tornaLivelloSuperiore() {
-  if (dettaglioProvenienza === 'lista-et') {
-    // Torna alla lista etichette del rack corrente
-    if (currentRackData) {
-      mostraListaEtichette(currentRackData.rack, currentRackData.sala, currentRackData.chiave);
-    } else {
-      tornaHome();
-    }
+  if (dettaglioProvenienza === 'lista-et' && currentRackData) {
+    mostraListaEtichette(currentRackData.rack, currentRackData.sala, currentRackData.chiave);
   } else {
     tornaHome();
   }
 }
 
 // ============================================================
-// DATABASE — con cache offline
+// DATABASE — cache offline robusta
 // ============================================================
-function caricaDB(url, retry) {
+function caricaDB() {
   setDot('loading');
-  const target = url || (CSV_DIRECT + "&nocache=" + Date.now());
-  fetch(target, { cache:"no-store", headers:{"Cache-Control":"no-cache"} })
+  const url = CSV_DIRECT + "&nocache=" + Date.now();
+  fetch(url, { cache:"no-store", headers:{"Cache-Control":"no-cache"} })
     .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
-    .then(t => {
-      db = parsaCSV(t);
-      dbPronto = true;
-      setDot('ok');
-      document.getElementById('db-txt').textContent   = 'DB OK';
-      document.getElementById('db-count').textContent = db.rows.length + ' righe';
-      // Salva in cache per uso offline
-      try {
-        localStorage.setItem(DB_CACHE_KEY, t);
-        localStorage.setItem(DB_TS_KEY, Date.now().toString());
-      } catch {}
-      document.getElementById('offline-banner').classList.remove('visible');
-      renderChips();
-    })
+    .then(t => elaboraCSV(t, false))
     .catch(() => {
-      if (!retry) {
-        caricaDB(CSV_PROXY + "&nocache=" + Date.now(), true);
-      } else {
-        // Nessuna rete — prova la cache offline
-        caricaDaCache();
-      }
+      fetch(CSV_PROXY + "&nocache=" + Date.now(), { cache:"no-store" })
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(t => elaboraCSV(t, false))
+        .catch(() => caricaDaCache());
     });
 }
 
+function elaboraCSV(t, daCache) {
+  const parsed = parsaCSV(t);
+  db = parsed;
+  dbPronto = true;
+
+  if (!daCache) {
+    // Salva in cache
+    try {
+      localStorage.setItem(DB_CACHE_KEY, t);
+      localStorage.setItem(DB_TS_KEY, Date.now().toString());
+    } catch {}
+    setDot('ok');
+    document.getElementById('db-txt').textContent = 'DB OK';
+    document.getElementById('offline-banner').classList.remove('visible');
+  } else {
+    setDot('offline');
+    document.getElementById('db-txt').textContent = 'OFFLINE';
+    mostraBannerOffline();
+  }
+
+  document.getElementById('db-count').textContent = db.rows.length + ' righe';
+  renderChips();
+}
+
 function caricaDaCache() {
-  try {
-    const cached = localStorage.getItem(DB_CACHE_KEY);
-    const ts     = localStorage.getItem(DB_TS_KEY);
-    if (cached) {
-      db = parsaCSV(cached);
-      dbPronto = true;
-      setDot('offline');
-      document.getElementById('db-txt').textContent   = 'OFFLINE';
-      document.getElementById('db-count').textContent = db.rows.length + ' righe';
-      // Mostra banner offline con data aggiornamento
-      const banner = document.getElementById('offline-banner');
-      banner.classList.add('visible');
-      if (ts) {
-        const d = new Date(parseInt(ts));
-        const fmt = d.getDate().toString().padStart(2,'0') + '/' +
-                    (d.getMonth()+1).toString().padStart(2,'0') + '/' +
-                    d.getFullYear() + ' ' +
-                    d.getHours().toString().padStart(2,'0') + ':' +
-                    d.getMinutes().toString().padStart(2,'0');
-        document.getElementById('offline-ts').textContent = 'AGG. ' + fmt;
-      }
-      renderChips();
-    } else {
-      setDot('err');
-      document.getElementById('db-txt').textContent = 'NO RETE';
-      document.getElementById('db-count').textContent = '';
-    }
-  } catch {
+  const cached = localStorage.getItem(DB_CACHE_KEY);
+  if (cached && cached.length > 10) {
+    elaboraCSV(cached, true);
+  } else {
     setDot('err');
-    document.getElementById('db-txt').textContent = 'ERRORE';
+    document.getElementById('db-txt').textContent = 'NO RETE';
+    document.getElementById('db-count').textContent = '';
+  }
+}
+
+function mostraBannerOffline() {
+  const ts = localStorage.getItem(DB_TS_KEY);
+  const banner = document.getElementById('offline-banner');
+  banner.classList.add('visible');
+  if (ts) {
+    const d = new Date(parseInt(ts));
+    document.getElementById('offline-ts').textContent =
+      'AGG. ' + d.getDate().toString().padStart(2,'0') + '/' +
+      (d.getMonth()+1).toString().padStart(2,'0') + '/' + d.getFullYear() +
+      ' ' + d.getHours().toString().padStart(2,'0') + ':' +
+      d.getMinutes().toString().padStart(2,'0');
   }
 }
 
@@ -430,12 +441,15 @@ function ricaricaDB() {
 function parsaCSV(t) {
   const lines = t.trim().split(/\r?\n/);
   const sep   = lines[0].includes(';') ? ';' : ',';
-  const res   = { rows:[], idx:{}, idxPiattaforma:{} };
+  const res   = { rows:[], idx:{}, idxPiattaforma:{}, clienti:[] };
+  const clientiSet = new Set();
+
   lines.forEach((line,i) => {
     if (i===0||!line.trim()) return;
     const c      = splitLine(line,sep);
     const chiave = (c[COL.chiave]||"").trim();
     if (!chiave||chiave.toUpperCase()==="DA ASSEGNARE") return;
+
     const row = {
       etichetta:   (c[COL.etichetta]  ||"").trim(),
       rack:        (c[COL.rack]       ||"").trim(),
@@ -449,7 +463,7 @@ function parsaCSV(t) {
     const idx = res.rows.length;
     res.rows.push(row);
 
-    // Indice per rack e etichetta (ricerca diretta)
+    // Indice rack/etichetta (ricerca diretta)
     [row.etichetta, row.rack].forEach(v => {
       if (!v) return;
       const k = v.toUpperCase();
@@ -457,13 +471,20 @@ function parsaCSV(t) {
       res.idx[k].push(idx);
     });
 
-    // Indice separato per piattaforma
+    // Indice piattaforma
     if (row.piattaforma) {
       const kp = row.piattaforma.toUpperCase();
       if (!res.idxPiattaforma[kp]) res.idxPiattaforma[kp]=[];
       res.idxPiattaforma[kp].push(idx);
+      // Clienti = piattaforme con chiave C...
+      if (chiave.toUpperCase().startsWith('C') && !clientiSet.has(row.piattaforma)) {
+        clientiSet.add(row.piattaforma);
+        res.clienti.push(row.piattaforma);
+      }
     }
   });
+
+  res.clienti.sort((a,b) => a.localeCompare(b));
   return res;
 }
 
@@ -480,80 +501,115 @@ function splitLine(line,sep) {
 
 function setDot(s) {
   const d = document.getElementById('db-dot');
-  d.className = s==='ok'?'ok':s==='err'?'err':s==='offline'?'offline':'';
+  d.className = s==='ok'?'ok':s==='offline'?'offline':s==='err'?'err':'';
   if (s==='loading') document.getElementById('db-txt').textContent='...';
+}
+
+// ============================================================
+// AUTOCOMPLETE CLIENTI
+// ============================================================
+function aggiornaSuggerimenti(val) {
+  const list = document.getElementById('suggest-list');
+  if (modalita !== 'txt' || !val.trim()) {
+    chiudiSuggerimenti(); return;
+  }
+  const q = val.trim().toUpperCase();
+  const matches = db.clienti.filter(c => c.toUpperCase().includes(q));
+  if (matches.length === 0) { chiudiSuggerimenti(); return; }
+
+  list.innerHTML = '';
+  matches.slice(0, 8).forEach(c => {
+    const item = document.createElement('div');
+    item.className = 'suggest-item';
+    // Evidenzia la parte che corrisponde
+    const idx = c.toUpperCase().indexOf(q);
+    if (idx >= 0) {
+      item.innerHTML = esc(c.substring(0,idx)) +
+        '<span class="suggest-match">' + esc(c.substring(idx, idx+val.trim().length)) + '</span>' +
+        esc(c.substring(idx+val.trim().length));
+    } else {
+      item.textContent = c;
+    }
+    item.onclick = () => {
+      document.getElementById('search-input').value = c;
+      chiudiSuggerimenti();
+      cerca(c);
+    };
+    list.appendChild(item);
+  });
+  list.classList.add('visible');
+}
+
+function chiudiSuggerimenti() {
+  document.getElementById('suggest-list').classList.remove('visible');
 }
 
 // ============================================================
 // SELETTORE MODALITÀ
 // ============================================================
 function setModalita(m) {
-  modalita=m;
-  const inp=document.getElementById('search-input');
-  document.getElementById('seg-num').classList.toggle('active',m==='num');
-  document.getElementById('seg-txt').classList.toggle('active',m==='txt');
-  inp.inputMode   = m==='num'?'numeric':'text';
-  inp.placeholder = m==='num'?'Es. 12345678':'Es. ACME SRL';
-  inp.value=''; inp.focus();
+  modalita = m;
+  const inp = document.getElementById('search-input');
+  document.getElementById('seg-num').classList.toggle('active', m==='num');
+  document.getElementById('seg-txt').classList.toggle('active', m==='txt');
+  inp.inputMode   = m==='num' ? 'numeric' : 'text';
+  inp.placeholder = m==='num' ? 'Es. 12345678' : 'Es. ACME SRL';
+  inp.value = '';
+  chiudiSuggerimenti();
+  inp.focus();
 }
 
 // ============================================================
 // RICERCA
 // ============================================================
 function cerca(query) {
-  const q=(query||"").trim(); if (!q) return;
-  document.getElementById('search-input').value=q;
+  const q = (query||"").trim();
+  if (!q) return;
+  chiudiSuggerimenti();
+  document.getElementById('search-input').value = q;
   document.getElementById('search-input').blur();
-  const k=q.toUpperCase();
 
-  // Se modalità piattaforma → flusso a livelli
-  if (modalita==='txt') {
-    cercaPerPiattaforma(q, k);
+  if (modalita === 'txt') {
+    cercaCliente(q);
     return;
   }
 
-  // Ricerca diretta per rack/etichetta
-  let indici=[...(db.idx[k]||[])];
+  // Ricerca rack/etichetta — esatta poi parziale
+  const k = q.toUpperCase();
+  let indici = [...(db.idx[k]||[])];
   if (!indici.length) {
-    const seen=new Set();
+    const seen = new Set();
     Object.keys(db.idx).forEach(key => {
-      if (key.includes(k)) db.idx[key].forEach(i => { if (!seen.has(i)){seen.add(i);indici.push(i);} });
+      if (key.includes(k)) db.idx[key].forEach(i => {
+        if (!seen.has(i)){seen.add(i);indici.push(i);}
+      });
     });
   }
-  const ris=indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave&&r.chiave.toUpperCase()!=="DA ASSEGNARE");
-
-  if (ris.length===0) {
-    mostraRisultatoSingolo(q, null);
-  } else if (ris.length===1) {
-    dettaglioProvenienza='result';
-    mostraDettaglio(ris[0], 'Ricerca: '+q.toUpperCase(), 'result');
-  } else {
-    // Più risultati per stesso rack — mostra il primo (stesso rack, stessa chiave)
-    dettaglioProvenienza='result';
-    mostraDettaglio(ris[0], 'Ricerca: '+q.toUpperCase(), 'result');
-  }
+  const ris = indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave&&r.chiave.toUpperCase()!=="DA ASSEGNARE");
   salvaStoria(q, ris);
+
+  if (!ris.length) { mostraNessunRisultato(q); return; }
+  dettaglioProvenienza = 'result';
+  mostraDettaglio(ris[0], 'Ricerca: '+q.toUpperCase(), 'result');
 }
 
-// ============================================================
-// FLUSSO PIATTAFORMA — Livello 1: Lista Rack
-// ============================================================
-function cercaPerPiattaforma(query, k) {
-  // Cerca la piattaforma (esatta poi parziale)
-  let indici=[...(db.idxPiattaforma[k]||[])];
-  if (!indici.length) {
-    const seen=new Set();
-    Object.keys(db.idxPiattaforma).forEach(key => {
-      if (key.includes(k)) db.idxPiattaforma[key].forEach(i => { if (!seen.has(i)){seen.add(i);indici.push(i);} });
-    });
-  }
-  const righe = indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave);
+function cercaCliente(query) {
+  // Ricerca ESATTA per piattaforma cliente
+  const k = query.toUpperCase();
+  let indici = [...(db.idxPiattaforma[k]||[])];
 
-  if (righe.length===0) {
-    mostraRisultatoSingolo(query, null);
-    salvaStoria(query, []);
-    return;
+  // Se non trovata esatta, cerca parziale ma SOLO tra i clienti
+  if (!indici.length) {
+    const match = db.clienti.find(c => c.toUpperCase().includes(k));
+    if (match) {
+      indici = [...(db.idxPiattaforma[match.toUpperCase()]||[])];
+    }
   }
+
+  const righe = indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave);
+  salvaStoria(query, righe);
+
+  if (!righe.length) { mostraNessunRisultato(query); return; }
 
   // Raggruppa per rack distinti
   const mappaRack = new Map();
@@ -565,49 +621,47 @@ function cercaPerPiattaforma(query, k) {
     mappaRack.get(rackKey).rows.push(r);
   });
 
-  const racks = [...mappaRack.values()];
   currentPiattaforma = query;
-  salvaStoria(query, righe);
-  mostraListaRack(query, racks);
+  mostraListaRack(query, [...mappaRack.values()]);
 }
 
+// ============================================================
+// LIVELLO 1 — Lista Rack
+// ============================================================
 function mostraListaRack(query, racksArg) {
-  // Se chiamata senza racks (back navigation), ricalcola
   let racks = racksArg;
   if (!racks) {
+    // Ricalcola (back navigation)
     const k = query.toUpperCase();
-    let indici=[...(db.idxPiattaforma[k]||[])];
+    let indici = [...(db.idxPiattaforma[k]||[])];
     if (!indici.length) {
-      const seen=new Set();
-      Object.keys(db.idxPiattaforma).forEach(key => {
-        if (key.includes(k)) db.idxPiattaforma[key].forEach(i => { if (!seen.has(i)){seen.add(i);indici.push(i);} });
-      });
+      const match = db.clienti.find(c => c.toUpperCase().includes(k));
+      if (match) indici = [...(db.idxPiattaforma[match.toUpperCase()]||[])];
     }
-    const righe=indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave);
-    const mappaRack=new Map();
+    const righe = indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave);
+    const m = new Map();
     righe.forEach(r=>{
-      const rackKey=r.rack||r.etichetta;
-      if (!mappaRack.has(rackKey)) mappaRack.set(rackKey,{rack:rackKey,sala:r.sala,chiave:r.chiave,rows:[]});
-      mappaRack.get(rackKey).rows.push(r);
+      const rk=r.rack||r.etichetta;
+      if (!m.has(rk)) m.set(rk,{rack:rk,sala:r.sala,chiave:r.chiave,rows:[]});
+      m.get(rk).rows.push(r);
     });
-    racks=[...mappaRack.values()];
+    racks = [...m.values()];
   }
 
-  currentPiattaforma=query;
-  const title=document.getElementById('lista-rack-title');
-  const scroll=document.getElementById('lista-rack-scroll');
-  title.textContent=query.toUpperCase();
-  scroll.innerHTML='';
+  currentPiattaforma = query;
+  document.getElementById('lista-rack-title').textContent = query.toUpperCase();
+  const scroll = document.getElementById('lista-rack-scroll');
+  scroll.innerHTML = '';
 
-  const lbl=document.createElement('div');
-  lbl.className='list-section-label';
-  lbl.textContent=racks.length+' rack — '+query.toUpperCase();
+  const lbl = document.createElement('div');
+  lbl.className = 'list-section-label';
+  lbl.textContent = racks.length + ' rack · ' + query.toUpperCase();
   scroll.appendChild(lbl);
 
-  racks.forEach(rd=>{
-    const item=document.createElement('div');
-    item.className='list-item';
-    item.innerHTML=`
+  racks.forEach(rd => {
+    const item = document.createElement('div');
+    item.className = 'list-item';
+    item.innerHTML = `
       <div class="li-left">
         <span class="li-main">${esc(rd.rack)}</span>
         ${rd.sala?`<span class="li-sub">${esc(rd.sala)}</span>`:''}
@@ -617,138 +671,138 @@ function mostraListaRack(query, racksArg) {
         <span class="li-key">${esc(rd.chiave)}</span>
         <span class="li-arrow">›</span>
       </div>`;
-    item.onclick=()=>{
-      currentRackData={rack:rd.rack, sala:rd.sala, chiave:rd.chiave};
+    item.onclick = () => {
+      currentRackData = { rack:rd.rack, sala:rd.sala, chiave:rd.chiave };
       mostraListaEtichette(rd.rack, rd.sala, rd.chiave, rd.rows);
     };
     scroll.appendChild(item);
   });
 
   mostraSchermata('screen-lista-rack');
-  scroll.scrollTop=0;
+  scroll.scrollTop = 0;
 }
 
 // ============================================================
-// FLUSSO PIATTAFORMA — Livello 2: Lista Etichette del Rack
+// LIVELLO 2 — Lista Etichette del Rack
 // ============================================================
 function mostraListaEtichette(rack, sala, chiave, rowsArg) {
   let rows = rowsArg;
   if (!rows) {
-    // Ricalcola dal DB
-    const k=rack.toUpperCase();
-    const indici=db.idx[k]||[];
-    rows=indici.map(i=>db.rows[i]).filter(r=>r&&r.chiave);
+    const k = rack.toUpperCase();
+    rows = (db.idx[k]||[]).map(i=>db.rows[i]).filter(r=>r&&r.chiave);
   }
 
-  currentRackData={rack, sala, chiave};
+  currentRackData = { rack, sala, chiave };
+  document.getElementById('lista-et-title').textContent  = rack;
+  document.getElementById('lista-et-chiave').textContent = chiave || '—';
+  document.getElementById('lista-et-sala').textContent   = sala || '';
+  document.getElementById('lista-et-rack').textContent   = 'Rack: ' + rack;
 
-  document.getElementById('lista-et-title').textContent=rack;
-  document.getElementById('lista-et-chiave').textContent=chiave||'—';
-  document.getElementById('lista-et-rack').textContent=sala||'';
+  const scroll = document.getElementById('lista-et-scroll');
+  scroll.innerHTML = '';
 
-  const scroll=document.getElementById('lista-et-scroll');
-  scroll.innerHTML='';
-
-  const lbl=document.createElement('div');
-  lbl.className='list-section-label';
-  lbl.textContent=rows.length+' etichett'+(rows.length===1?'a':'e')+' nel rack';
+  const lbl = document.createElement('div');
+  lbl.className = 'list-section-label';
+  lbl.textContent = rows.length + ' etichett' + (rows.length===1?'a':'e') + ' nel rack';
   scroll.appendChild(lbl);
 
-  rows.forEach(r=>{
-    const item=document.createElement('div');
-    item.className='list-item';
-    item.innerHTML=`
+  rows.forEach(r => {
+    const item = document.createElement('div');
+    item.className = 'list-item';
+    item.innerHTML = `
       <div class="li-left">
         <span class="li-main">${esc(r.etichetta||'—')}</span>
-        ${r.assetSN?`<span class="li-sub">SN: ${esc(r.assetSN)}</span>`:''}
-        ${r.categoria?`<span class="li-sub2">${esc(r.categoria)}</span>`:''}
+        ${r.assetSN   ? `<span class="li-sub">SN: ${esc(r.assetSN)}</span>` : ''}
+        ${r.categoria ? `<span class="li-sub2">${esc(r.categoria)}${r.modello?' · '+esc(r.modello):''}</span>` : (r.modello?`<span class="li-sub2">${esc(r.modello)}</span>`:'')}
       </div>
       <span class="li-arrow">›</span>`;
-    item.onclick=()=>{
-      dettaglioProvenienza='lista-et';
-      mostraDettaglio(r, rack+' › '+r.etichetta, 'lista-et');
+    item.onclick = () => {
+      dettaglioProvenienza = 'lista-et';
+      mostraDettaglio(r, rack + ' › ' + (r.etichetta||''), 'lista-et');
     };
     scroll.appendChild(item);
   });
 
   mostraSchermata('screen-lista-et');
-  scroll.scrollTop=0;
+  scroll.scrollTop = 0;
 }
 
 // ============================================================
-// DETTAGLIO ETICHETTA (usato da entrambi i flussi)
+// LIVELLO 3 — Dettaglio Etichetta
 // ============================================================
 function mostraDettaglio(r, queryLabel, provenienza) {
   dettaglioProvenienza = provenienza || 'result';
 
-  document.getElementById('dettaglio-chiave').textContent=r.chiave||'—';
-  document.getElementById('dettaglio-query').textContent=queryLabel||'';
-  document.getElementById('dettaglio-title').textContent='DETTAGLIO';
+  // Nasconde tasto "← Indietro" se provenienza è diretta (nessun livello intermedio)
+  const btnIndietro = document.getElementById('back-superiore-btn');
+  btnIndietro.style.display = provenienza === 'lista-et' ? '' : 'none';
 
-  const scroll=document.getElementById('dettaglio-scroll');
-  scroll.innerHTML='';
-  const card=document.createElement('div'); card.className='card';
-  const grid=document.createElement('div'); grid.className='data-grid';
+  document.getElementById('dettaglio-chiave').textContent = r.chiave || '—';
+  document.getElementById('dettaglio-sala').textContent   = r.sala || '';
+  document.getElementById('dettaglio-query').textContent  = queryLabel || '';
+  document.getElementById('dettaglio-title').textContent  = 'DETTAGLIO';
 
-  const cell=(label,val,cls,full)=>{
+  const scroll = document.getElementById('dettaglio-scroll');
+  scroll.innerHTML = '';
+  const card = document.createElement('div'); card.className='card';
+  const grid = document.createElement('div'); grid.className='data-grid';
+
+  const cell = (label,val,cls,full) => {
     if (!val) return;
-    const d=document.createElement('div');
-    d.className='dcell'+(full?' full':'');
-    d.innerHTML=`<div class="dlbl">${label}</div><div class="dval ${cls||''}">${esc(val)}</div>`;
+    const d = document.createElement('div');
+    d.className = 'dcell' + (full?' full':'');
+    d.innerHTML = `<div class="dlbl">${label}</div><div class="dval ${cls||''}">${esc(val)}</div>`;
     grid.appendChild(d);
   };
 
-  cell('Etichetta Asset', r.etichetta, 'red');
-  cell('Rack',            r.rack,      'red');
-  cell('Asset SN',        r.assetSN,   'amb');
-  cell('Sala / Posizione',r.sala,      '');
-  cell('Piattaforma',     r.piattaforma,'grn');
-  cell('Categoria',       r.categoria, '');
-  cell('Modello',         r.modello,   '');
+  cell('Etichetta Asset', r.etichetta,   'red');
+  cell('Rack',            r.rack,        'red');
+  cell('Asset SN',        r.assetSN,     'amb');
+  cell('Sala / Posizione',r.sala,        '');
+  cell('Piattaforma',     r.piattaforma, 'grn');
+  cell('Categoria',       r.categoria,   '');
+  cell('Modello',         r.modello,     '');
 
   card.appendChild(grid);
   scroll.appendChild(card);
   mostraSchermata('screen-dettaglio');
-  scroll.scrollTop=0;
+  scroll.scrollTop = 0;
 }
 
 // ============================================================
-// RISULTATO SINGOLO — usato per "nessun risultato" e ricerche dirette
+// NESSUN RISULTATO
 // ============================================================
-function mostraRisultatoSingolo(query, r) {
-  const hero=document.getElementById('res-hero');
-  const scroll=document.getElementById('res-scroll');
-  const title=document.getElementById('res-hdr-title');
-  scroll.innerHTML='';
-
-  if (!r) {
-    hero.style.display='none';
-    title.textContent='NESSUN RISULTATO';
-    scroll.innerHTML=`<div class="nf-wrap"><div class="nf-icon">🔍</div><div class="nf-msg">Nessun risultato</div><div class="nf-sub">"${esc(query)}" non trovato nel database</div></div>`;
-    mostraSchermata('screen-result');
-    return;
-  }
+function mostraNessunRisultato(query) {
+  document.getElementById('noresult-sub').textContent = '"' + query + '" non trovato nel database';
+  mostraSchermata('screen-noresult');
 }
 
 // ============================================================
 // CRONOLOGIA
 // ============================================================
 function salvaStoria(q,ris) {
-  const chiave=ris.length>0?ris[0].chiave:null;
-  let s=getStoria().filter(x=>x.q.toUpperCase()!==q.toUpperCase());
-  s.unshift({q,chiave,ts:Date.now(),n:ris.length});
+  const chiave = ris.length>0 ? ris[0].chiave : null;
+  let s = getStoria().filter(x=>x.q.toUpperCase()!==q.toUpperCase());
+  s.unshift({q, chiave, ts:Date.now(), n:ris.length, m:modalita});
   if (s.length>MAX_HIST) s=s.slice(0,MAX_HIST);
   try{localStorage.setItem('ldc_storia',JSON.stringify(s));}catch{}
   renderChips();
 }
 function getStoria(){try{return JSON.parse(localStorage.getItem('ldc_storia')||'[]');}catch{return[];}}
-function renderChips(){
-  const s=getStoria().slice(0,6), w=document.getElementById('quick-chips');
-  w.innerHTML='';
-  s.forEach(x=>{const c=document.createElement('span');c.className='chip';c.textContent=x.q;c.onclick=()=>{
-    // Ripristina la modalità corretta in base al tipo di query salvata
-    cerca(x.q);
-  };w.appendChild(c);});
+function renderChips() {
+  const s = getStoria().slice(0,6), w = document.getElementById('quick-chips');
+  w.innerHTML = '';
+  s.forEach(x => {
+    const c = document.createElement('span');
+    c.className = 'chip';
+    c.textContent = x.q;
+    c.onclick = () => {
+      // Ripristina la modalità corretta
+      if (x.m && x.m !== modalita) setModalita(x.m);
+      cerca(x.q);
+    };
+    w.appendChild(c);
+  });
 }
 
 // ============================================================
@@ -766,8 +820,11 @@ function setTab(tab) {
 }
 
 function renderHistoryIn(w) {
-  const s=getStoria();
-  if (!s.length){w.innerHTML=`<div style="text-align:center;padding:40px 20px;font-family:var(--font-m);font-size:13px;color:var(--muted)">Nessuna ricerca ancora</div>`;return;}
+  const s = getStoria();
+  if (!s.length){
+    w.innerHTML=`<div style="text-align:center;padding:40px 20px;font-family:var(--font-m);font-size:13px;color:var(--muted)">Nessuna ricerca ancora</div>`;
+    return;
+  }
   const hdr=document.createElement('div');
   hdr.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:0 2px';
   hdr.innerHTML=`<span style="font-family:var(--font-m);font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase">${s.length} ricerche</span><span onclick="svuotaStoria()" style="font-family:var(--font-m);font-size:11px;color:var(--muted);cursor:pointer;padding:4px 8px">✕ SVUOTA</span>`;
@@ -777,29 +834,30 @@ function renderHistoryIn(w) {
     const meta=d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+' '+d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0')+' · '+x.n+(x.n===1?' risultato':' risultati');
     const item=document.createElement('div'); item.className='hist-item';
     item.innerHTML=`<div style="min-width:0"><div class="hi-q">${esc(x.q)}</div><div class="hi-meta">${meta}</div></div>${x.chiave?`<span class="hi-key">${esc(x.chiave)}</span>`:`<span class="hi-nil">/</span>`}`;
-    item.onclick=()=>cerca(x.q);
+    item.onclick=()=>{ if(x.m&&x.m!==modalita) setModalita(x.m); cerca(x.q); };
     w.appendChild(item);
   });
 }
 function svuotaStoria(){try{localStorage.removeItem('ldc_storia');}catch{}renderChips();setTab('history');}
 
 function renderInfoIn(w) {
-  const ts=localStorage.getItem(DB_TS_KEY);
-  let tsStr='Mai';
-  if (ts){
-    const d=new Date(parseInt(ts));
-    tsStr=d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear()+' '+d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+  const ts = localStorage.getItem(DB_TS_KEY);
+  let tsStr = 'Mai';
+  if (ts) {
+    const d = new Date(parseInt(ts));
+    tsStr = d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear()+' '+d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
   }
+  const isOffline = document.getElementById('db-dot').className === 'offline';
   const card=document.createElement('div'); card.className='card';
   card.innerHTML=`
     <div class="card-hdr">Info app</div>
     <div class="data-grid">
-      <div class="dcell full"><div class="dlbl">Versione</div><div class="dval">LDC Keys 5.0</div></div>
+      <div class="dcell full"><div class="dlbl">Versione</div><div class="dval">LDC Keys 5.1</div></div>
       <div class="dcell"><div class="dlbl">Righe nel DB</div><div class="dval red">${db.rows.length}</div></div>
-      <div class="dcell"><div class="dlbl">Ricerche salvate</div><div class="dval">${getStoria().length} / ${MAX_HIST}</div></div>
+      <div class="dcell"><div class="dlbl">Clienti nel DB</div><div class="dval">${db.clienti.length}</div></div>
       <div class="dcell full"><div class="dlbl">Ultimo aggiornamento DB</div><div class="dval">${tsStr}</div></div>
-      <div class="dcell full"><div class="dlbl">Modalità</div><div class="dval" id="info-modalita">${dbPronto&&localStorage.getItem(DB_CACHE_KEY)&&document.getElementById('db-dot').className==='offline'?'OFFLINE — dati in cache':'ONLINE'}</div></div>
-      <div class="dcell full"><div class="dlbl">Come usare</div><div class="dval" style="font-size:14px;font-weight:400;line-height:1.7">📷 Scansiona barcode sulle etichette fisiche<br>QR  Leggi il QR generato da ServiceNow<br>Seleziona il tipo di ricerca per il tastierino corretto<br>Il DB viene salvato per uso offline</div></div>
+      <div class="dcell full"><div class="dlbl">Modalità connessione</div><div class="dval ${isOffline?'amb':'grn'}">${isOffline?'OFFLINE — dati in cache':'ONLINE'}</div></div>
+      <div class="dcell full"><div class="dlbl">Come usare</div><div class="dval" style="font-size:14px;font-weight:400;line-height:1.7">📷 Scansiona barcode sulle etichette fisiche<br>QR  Leggi il QR generato da ServiceNow<br>Il DB viene salvato automaticamente per uso offline</div></div>
     </div>
     <div style="padding:11px"><button onclick="ricaricaDB();tornaHome()" style="width:100%;height:48px;background:var(--red);color:white;border:none;border-radius:var(--r-sm);font-family:var(--font-h);font-size:20px;letter-spacing:3px;cursor:pointer;">↻  RICARICA DB</button></div>`;
   w.appendChild(card);
@@ -810,20 +868,19 @@ function renderInfoIn(w) {
 // ============================================================
 function apriScan(tipo) {
   if (scanners[tipo]) chiudiScan(tipo);
-  const ovId=tipo==='barcode'?'scan-barcode':'scan-qrsn';
-  const boxId=tipo==='barcode'?'box-barcode':'box-qrsn';
+  const ovId  = tipo==='barcode'?'scan-barcode':'scan-qrsn';
+  const boxId = tipo==='barcode'?'box-barcode':'box-qrsn';
   document.getElementById(ovId).classList.add('visible');
-  const s=new Html5Qrcode(boxId); scanners[tipo]=s;
+  const s = new Html5Qrcode(boxId); scanners[tipo]=s;
   s.start(
     {facingMode:"environment"},
     {fps:10, qrbox:tipo==='qrsn'?{width:280,height:280}:{width:280,height:160}},
-    (testo)=>{
+    (testo) => {
       chiudiScan(tipo);
       try {
-        const d=JSON.parse(testo);
-        if (d&&(d.rack||d.etichetta||d.piattaforma)){
-          const query=d.rack||d.etichetta||d.piattaforma||"";
-          if (query){cerca(query);return;}
+        const d = JSON.parse(testo);
+        if (d&&(d.rack||d.etichetta||d.piattaforma)) {
+          cerca(d.rack||d.etichetta||d.piattaforma); return;
         }
       } catch {}
       cerca(testo.trim());
@@ -844,12 +901,29 @@ function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').repl
 // ============================================================
 // EVENTI
 // ============================================================
-document.getElementById('btn-search').onclick=()=>cerca(document.getElementById('search-input').value);
-document.getElementById('search-input').addEventListener('keydown',e=>{if(e.key==='Enter')cerca(e.target.value);});
-document.getElementById('btn-scan').onclick=()=>apriScan('barcode');
-document.getElementById('btn-qr').onclick=()=>apriScan('qrsn');
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){chiudiScan('barcode');chiudiScan('qrsn');}});
-window.addEventListener('popstate',()=>tornaHome());
+document.getElementById('btn-search').onclick = () => cerca(document.getElementById('search-input').value);
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key==='Enter') { chiudiSuggerimenti(); cerca(e.target.value); }
+  if (e.key==='Escape') chiudiSuggerimenti();
+});
+document.getElementById('search-input').addEventListener('input', e => {
+  aggiornaSuggerimenti(e.target.value);
+});
+document.getElementById('search-input').addEventListener('blur', () => {
+  // Piccolo delay per permettere il click sul suggerimento
+  setTimeout(chiudiSuggerimenti, 200);
+});
+
+document.getElementById('btn-scan').onclick = () => apriScan('barcode');
+document.getElementById('btn-qr').onclick   = () => apriScan('qrsn');
+document.addEventListener('keydown', e => {
+  if (e.key==='Escape'){chiudiScan('barcode');chiudiScan('qrsn');}
+});
+// Chiudi suggerimenti cliccando fuori
+document.addEventListener('click', e => {
+  if (!e.target.closest('.input-wrap')) chiudiSuggerimenti();
+});
+window.addEventListener('popstate', () => tornaHome());
 history.pushState(null,'',window.location.href);
 
 // ============================================================
